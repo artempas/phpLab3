@@ -4,9 +4,9 @@ info:
   description: FlightsAPI
   version: 1.0.0
 servers:
-  - url: http://localhost:8000
+  - url: http://localhost:8000/api/v1
 paths:
-  /fligths/{id}:
+  /flights/{id}:
     get:
       summary: Get flight by id
       operationId: getFlight
@@ -40,6 +40,13 @@ paths:
       operationId: replaceFlight
       tags:
         - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
       requestBody:
         description: Object to replace with
         required: true
@@ -68,6 +75,13 @@ paths:
       operationId: deleteFlight
       tags:
         - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
       responses:
         200:
           description: Deleted instance
@@ -83,6 +97,13 @@ paths:
       operationId: patchFlight
       tags:
         - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
       requestBody:
         description: Data for partial update. NO FIELDS ARE REQUIRED
         required: true
@@ -151,7 +172,7 @@ paths:
             schema:
               $ref: "#/components/schemas/Flight"
       responses:
-        201:
+        200:
           description: Filtered instances
           content:
             application/json:
@@ -166,7 +187,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Errors"
-  /Airports/{IATACode}:
+  /airports/{IATACode}:
     get:
       summary: Get Airport by IATA code
       operationId: getAirport
@@ -196,6 +217,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Errors"
     put:
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
       summary: Replace existing airport
       operationId: replaceAirport
       tags:
@@ -224,6 +252,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Errors"
     delete:
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
       summary: Delete airport
       operationId: deleteAirport
       tags:
@@ -239,6 +274,13 @@ paths:
                   data:
                     $ref: "#/components/schemas/Airport"
     patch:
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
       summary: Partial update of airport
       operationId: patchAirport
       tags:
@@ -268,7 +310,7 @@ paths:
                 $ref: "#/components/schemas/Errors"
 
 
-  /Airports:
+  /airports:
     post:
       summary: Create new airport
       operationId: createAirport
@@ -297,7 +339,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Errors"
-  /Airports:search:
+  /airports:search:
     post:
       summary: Search object by filter
       operationId: filterAirports
@@ -311,7 +353,7 @@ paths:
             schema:
               $ref: "#/components/schemas/Airport"
       responses:
-        201:
+        200:
           description: Filtered instances
           content:
             application/json:
@@ -415,6 +457,7 @@ components:
           type: string
           enum:
             - 400
+            - 422
             - 404
             - 500
         message:
