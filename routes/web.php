@@ -1,5 +1,5 @@
 <?php
-
+use Ensi\LaravelServeSwagger\Controllers\SwaggerController;
 use Illuminate\Support\Facades\Route;
 
 /*

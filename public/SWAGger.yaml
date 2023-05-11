@@ -1,0 +1,471 @@
+openapi: "3.0.0"
+info:
+  title: Flights API
+  description: FlightsAPI
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/v1
+paths:
+  /flights/{id}:
+    get:
+      summary: Get flight by id
+      operationId: getFlight
+      tags:
+        - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Flight"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+    put:
+      summary: Replace existing flight
+      operationId: replaceFlight
+      tags:
+        - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
+      requestBody:
+        description: Object to replace with
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Flight"
+      responses:
+        201:
+          description: Created instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Flight"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+    delete:
+      summary: Delete flight
+      operationId: deleteFlight
+      tags:
+        - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Deleted instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Flight"
+    patch:
+      summary: Partial update of flight
+      operationId: patchFlight
+      tags:
+        - Flights
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of flight
+          schema:
+            type: integer
+      requestBody:
+        description: Data for partial update. NO FIELDS ARE REQUIRED
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Flight"
+      responses:
+        200:
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Flight"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+
+
+  /flights:
+    post:
+      summary: Create new flight
+      operationId: createFlight
+      tags:
+        - Flights
+      requestBody:
+        description: Flight to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Flight"
+      responses:
+        201:
+          description: Created instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Flight"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+  /flights:search:
+    post:
+      summary: Search object by filter
+      operationId: filterFlights
+      tags:
+        - Flights
+      requestBody:
+        description: Fields to filter by. NO FIELDS ARE REQUIRED
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Flight"
+      responses:
+        200:
+          description: Filtered instances
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Flights"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+  /airports/{IATACode}:
+    get:
+      summary: Get Airport by IATA code
+      operationId: getAirport
+      tags:
+        - Airports
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
+      responses:
+        200:
+          description: Airport
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Airport"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+    put:
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
+      summary: Replace existing airport
+      operationId: replaceAirport
+      tags:
+        - Airports
+      requestBody:
+        description: Object to replace with
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Airport"
+      responses:
+        201:
+          description: Created instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Airport"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+    delete:
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
+      summary: Delete airport
+      operationId: deleteAirport
+      tags:
+        - Airports
+      responses:
+        200:
+          description: Deleted instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Airport"
+    patch:
+      parameters:
+        - name: IATACode
+          in: path
+          required: true
+          description: Iata code of airport
+          schema:
+            type: string
+      summary: Partial update of airport
+      operationId: patchAirport
+      tags:
+        - Airports
+      requestBody:
+        description: Data for partial update. NO FIELDS ARE REQUIRED
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Airport"
+      responses:
+        200:
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Airport"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+
+
+  /airports:
+    post:
+      summary: Create new airport
+      operationId: createAirport
+      tags:
+        - Airports
+      requestBody:
+        description: Airport to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Airport"
+      responses:
+        201:
+          description: Created instance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Airport"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+  /airports:search:
+    post:
+      summary: Search object by filter
+      operationId: filterAirports
+      tags:
+        - Airports
+      requestBody:
+        description: Fields to filter by. NO FIELDS ARE REQUIRED
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Airport"
+      responses:
+        200:
+          description: Filtered instances
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Airports"
+        default:
+          description: Array of errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Errors"
+
+components:
+  schemas:
+    Flight:
+      type: object
+      required:
+        - flightNo
+        - airline
+        - departureTimeScheduled
+        - departureAirport
+        - arrivalAirport
+        - arrivalTimeScheduled
+      properties:
+        id:
+          type: integer
+          description: Id generated by ORM
+          example: 1
+        flightNo:
+          type: string
+          format: XX0000
+          description: Flight number (2 letters of airline code 4 numbers for flight number)
+          example: SU690
+        airline:
+          type: string
+          description: Airline name
+          example: Aeroflot
+        departureTimeScheduled:
+          type: string
+          format: ISO-8601
+          description: Departure time by schedule in departure airport time zone
+          example: 2023-04-26T21:17:41+0000
+        departureTimeActual:
+          type: string
+          format: ISO-8601
+          description: Actual departure time in departure airport time zone
+          example: 2023-04-26T21:17:41+0000
+        departureAirport:
+          type: string
+          format: char(3)
+          description: IATA code of departure airport
+          example: SVO
+        arrivalAirport:
+          type: string
+          format: char(3)
+          description: IATA code of arrival
+          example: NYC
+        arrivalTimeScheduled:
+          type: string
+          format: ISO-8601
+          description: Arrival time by schedule in departure airport time zone
+          example: 2023-04-26T21:17:41+0000
+        arrivalTimeActual:
+          type: string
+          format: ISO-8601
+          description: Actual arrival time in departure airport time zone
+          example: 2023-04-26T21:17:41+0000
+    Flights:
+      type: array
+      items:
+        $ref: "#/components/schemas/Flight"
+    Airport:
+      type: object
+      required:
+        - IATACode
+        - city
+      properties:
+        IATACode:
+          type: string
+          format: char(3)
+          example: "SVO"
+          description: IATA code of airport (3 letters)
+        city:
+          type: string
+          example: "Moscow Sheremetyevo"
+          description: City name
+    Airports:
+      type: array
+      items:
+        $ref: "#/components/schemas/Airport"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - 400
+            - 422
+            - 404
+            - 500
+        message:
+          type: string
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
